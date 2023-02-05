@@ -2,11 +2,18 @@
 
 ## Unit tests
 
+    [ ] Authentication Middleware
+        [ ] An invalid profile should return 401 - Unauthorized
     [ ] Get contract by ID
-        [ ] Owner can access his contracts
+        [ ] Only owner can access his contracts
         [ ] Contractor can't access contracts from other contractors
         [ ] Not found contractors should return 404
         [ ] Not found contracts should return 404
+    [ ] Get contracts
+        [ ] Only owner can access his contracts
+        [ ] Contractor can't access contracts from other contractors
+        [ ] No contracts should return 200 with an empty array
+        [ ] Found contracts couldn't be "terminated"
 
 ## General Comments
 
