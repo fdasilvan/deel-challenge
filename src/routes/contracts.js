@@ -1,8 +1,10 @@
 var express = require("express");
 const router = express.Router({ mergeParams: true });
-const Op = require("sequelize").Op;
 
-const { Contract } = require("../model");
+const {
+  getAllActiveContracts,
+  getContractById
+} = require("../repositories/contractsReposity");
 
 /**
  * @returns contract by id
@@ -10,9 +12,7 @@ const { Contract } = require("../model");
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const contract = await Contract.findOne({
-    where: { id, ContractorId: req.profile.id }
-  });
+  const contract = await getContractById(id, req.profile.id);
   if (!contract) return res.status(404).end();
   res.json(contract);
 });
@@ -21,12 +21,7 @@ router.get("/:id", async (req, res) => {
  * @returns all active contracts by contractor ID
  */
 router.get("/", async (req, res) => {
-  const contracts = await Contract.findAll({
-    where: {
-      ContractorId: req.profile.id,
-      status: { [Op.ne]: "terminated" }
-    }
-  });
+  const contracts = await getAllActiveContracts(req.profile.id);
   if (!contracts) return res.status(404).end();
   res.json(contracts);
 });

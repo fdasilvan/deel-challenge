@@ -8,11 +8,10 @@ app.use(bodyParser.json());
 app.set("sequelize", sequelize);
 app.set("models", sequelize.models);
 
-const getProfile = require("./routes/middleware/getProfile");
+// Applies the authentication middleware for all the next routes
+app.use(require("./routes/middleware/getProfile"));
 
-const contracts = require("./routes/contracts");
-
-app.use(getProfile);
-app.use("/contracts", contracts);
+app.use("/contracts", require("./routes/contracts"));
+app.use("/jobs", require("./routes/jobs"));
 
 module.exports = app;
