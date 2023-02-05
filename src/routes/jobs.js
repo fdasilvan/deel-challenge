@@ -3,18 +3,14 @@ const router = express.Router({ mergeParams: true });
 
 const { Job } = require("../model");
 
+const { getAllUnpaidJobs } = require("../repositories/jobsRepository");
+
 /**
- * @returns all unpaid jobs
+ * @returns gets all unpaid jobs from user's active contracts - both as a client and contractor
  */
 router.get("/unpaid", async (req, res) => {
-  const contracts = await Job.findAll({
-    where: {
-      ContractorId: req.profile.id,
-      status: { [Op.ne]: "terminated" }
-    }
-  });
-  if (!contracts) return res.status(404).end();
-  res.json(contracts);
+  const result = await getAllUnpaidJobs(req.profile.id);
+  res.json(result);
 });
 
 module.exports = router;

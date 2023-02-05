@@ -21,10 +21,12 @@
 
 ### Jobs
 
-    [ ] Get unpaid jobs
+    [ ] Get unpaid jobs for active contracts
+        [ ] Shouldn't bring paid jobs
+        [ ] Should only bring contracts in which the logged user is either a client or a contractor
+        [ ] Should only bring active contracts
 
 ## General Comments
 
 1. I had to update SQLite3 version from 4.0.1 to 5.1.4, since I was facing errors when installing the dependencies. I could probably
    change my Node version but I think that, in general, having an up-to-date package is a good thing.
-2.
