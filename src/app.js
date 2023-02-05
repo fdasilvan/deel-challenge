@@ -8,7 +8,6 @@ app.set("sequelize", sequelize);
 app.set("models", sequelize.models);
 
 /**
- * FIX ME!
  * @returns contract by id
  */
 app.get("/contracts/:id", getProfile, async (req, res) => {
@@ -16,7 +15,7 @@ app.get("/contracts/:id", getProfile, async (req, res) => {
   const { id } = req.params;
 
   const contract = await Contract.findOne({
-    where: { id, ContractorId: 1 }
+    where: { id, ContractorId: req.profile.id }
   });
   if (!contract) return res.status(404).end();
   res.json(contract);
