@@ -1,5 +1,10 @@
 # Comments
 
+## Tech Debts
+
+[ ] Implement error handling
+[ ] Implement logging
+
 ## Unit tests
 
 ### Authentication Middleware
@@ -25,6 +30,12 @@
         [ ] Shouldn't bring paid jobs
         [ ] Should only bring contracts in which the logged user is either a client or a contractor
         [ ] Should only bring active contracts
+    [ ] Pay job
+        [ ] Can't pay for a job that is already paid
+        [ ] Can't pay if the client is invalid
+        [ ] Can't pay if the contractor is invalid
+        [ ] Can't pay if the client doesn't have enough balance
+        [ ] If met all the conditions, the job should have paid = 1 and a paymentDate
 
 ## General Comments
 
