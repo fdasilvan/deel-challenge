@@ -1,5 +1,4 @@
 const { Job, Contract } = require("../model");
-const { sequelize } = require("../model");
 
 const { transferFunds } = require("./profilesRepository");
 

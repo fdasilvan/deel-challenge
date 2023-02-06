@@ -1,15 +1,23 @@
 # Comments
 
+## General Comments
+
+1. I had to update SQLite3 version from 4.0.1 to 5.1.4, since I was facing errors when installing the dependencies. I could probably
+   change my Node version but I think that, in general, having an up-to-date package is a good thing.
+2. I created simple repository and service layers to be able to reuse code, but if it was a bigger product I'd probably create a fanciest one, inclusind Interfaces, Dependency Injetcion, etc..
+
 ## Tech Debts
 
-[ ] Implement error handling
-[ ] Implement logging
+[ ] Implement better error handling
+[ ] Implement better logging
+[ ] Implement Service Layer, where the business logic should be
+[ ] Implement transactions on transfer endpoint (I had some difficulties making it work in Sequelize/SQLite)
 
 ## Unit tests
 
 ### Authentication Middleware
 
-        [ ] An invalid profile should return 401 - Unauthorized
+    [ ] An invalid profile should return 401 - Unauthorized
 
 ### Contracts
 
@@ -37,7 +45,10 @@
         [ ] Can't pay if the client doesn't have enough balance
         [ ] If met all the conditions, the job should have paid = 1 and a paymentDate
 
-## General Comments
+### Profile
 
-1. I had to update SQLite3 version from 4.0.1 to 5.1.4, since I was facing errors when installing the dependencies. I could probably
-   change my Node version but I think that, in general, having an up-to-date package is a good thing.
+    [ ] Make a deposit
+        [ ] Can't deposit for an invalid user
+        [ ] Can't deposit negative amount
+        [ ] Can't despoit if the amount exceeds 25% of open jobs
+        [ ] If the deposit succeeds, the balance should match previous value + deposit amount

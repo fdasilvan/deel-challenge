@@ -2,7 +2,6 @@ const { Profile } = require("../model");
 const { sequelize } = require("sequelize");
 
 const transferFunds = async (fromUserId, toUserId, amount) => {
-  //const transaction = await sequelize.transaction();
   try {
     // Fetch client and verifies the balance
     const client = await Profile.findOne({
@@ -31,14 +30,31 @@ const transferFunds = async (fromUserId, toUserId, amount) => {
     // Updates contractor's balance
     const contractorNewBalance = { balance: (client.balance += amount) };
     await contractor.update(contractorNewBalance);
-
-    // Commits the transaction and confirms it happened;
-    //await transaction.commit();
     return true;
   } catch (ex) {
-    //await transaction.rollback();
     throw ex;
   }
 };
 
-module.exports = { transferFunds };
+const depositFunds = async (profileId, depositAmount) => {
+  try {
+    // Fetch client and verifies the balance
+    const client = await Profile.findOne({
+      where: {
+        id: profileId
+      }
+    });
+
+    const updateObj = {
+      balance: (client.balance += depositAmount)
+    };
+
+    // Adds the deposit amount to the balance
+    const updatedClient = await client.update(updateObj);
+    return updatedClient;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+module.exports = { transferFunds, depositFunds };

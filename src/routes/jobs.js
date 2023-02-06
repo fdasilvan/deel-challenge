@@ -13,15 +13,16 @@ router.get("/unpaid", async (req, res) => {
   res.json(result);
 });
 
+/**
+ * @method pays for an unpaid job if the client's has enough funds
+ */
 router.post("/:job_id/pay", async (req, res) => {
   try {
     await payJob(req.params.job_id);
     res.status(200).json("Payment sucessful!");
   } catch (ex) {
-    console.log(
-      "[ERROR] It was not possible to pay JOB " + req.params.job_id + "]: " + ex
-    );
-    return res.status(400).json(ex.message);
+    console.log(ex);
+    return res.status(400).json(ex);
   }
 });
 
