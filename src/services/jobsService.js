@@ -4,6 +4,8 @@ const {
   getJobById
 } = require("../repositories/jobsRepository");
 
+const { transferFunds } = require("../repositories/profilesRepository");
+
 const getUnpaidJobs = async (profileId) => {
   try {
     const unpaidJobs = await getAllUnpaidJobs(profileId);
@@ -35,7 +37,7 @@ const payJob = async (jobId) => {
       job.price
     );
 
-    console.log("### TRANSFER OCCURED SUCCESSFULLY");
+    console.log("### TRANSFER OCCURED SUCCESSFULLY? " + transferOccured);
 
     if (!transferOccured) {
       throw new Error("It was not possible to transfer the funds.");

@@ -40,6 +40,7 @@
         [ ] Should only bring active contracts
     [ ] Pay job
         [ ] Can't pay for a job that is already paid
+        [ ] Only the client can pay for a job
         [ ] Can't pay if the client is invalid
         [ ] Can't pay if the contractor is invalid
         [ ] Can't pay if the client doesn't have enough balance

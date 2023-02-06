@@ -6,6 +6,11 @@ const getAllUnpaidJobs = async (profileId) => {
   console.log(`### GETTING UNPAID JOBS FOR USER ${profileId}`);
 
   const unpaidJobs = await Job.findAll({
+    where: {
+      paid: {
+        [Op.eq]: null
+      }
+    },
     include: [
       {
         model: Contract,
@@ -58,8 +63,8 @@ const pay = async (jobId) => {
     // If everything happened as expected, then update job after
     await job.update({ paid: 1, paymentDate: new Date() });
 
-    // Return TRUE if the process was sucessful and FALSE if not
-    return paymentOccured;
+    // Return TRUE if the process was sucessful;
+    return true;
   } catch (ex) {
     throw ex;
   }

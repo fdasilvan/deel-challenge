@@ -12,6 +12,7 @@ const transferFunds = async (fromUserId, toUserId, amount) => {
     // P.S.: I would not return a specific error mentioning the balance in a production env, since someone
     // could try to figure out the balance from an user account by creating fake jobs and calling this endpoint out.
     if (!client || client.balance < amount) {
+      console.log(`CLIENT'S BALANCE: ${client.balance} -> AMOUNT: ${amount}`);
       throw new Error("It wasn't possible to make the transfer");
     }
 
@@ -27,7 +28,7 @@ const transferFunds = async (fromUserId, toUserId, amount) => {
     });
 
     // Updates contractor's balance
-    const contractorNewBalance = { balance: (client.balance += amount) };
+    const contractorNewBalance = { balance: (contractor.balance += amount) };
     await contractor.update(contractorNewBalance);
     return true;
   } catch (ex) {
