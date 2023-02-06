@@ -1,5 +1,8 @@
+const moment = require("moment");
+const { QueryTypes } = require("sequelize");
 const { Job, Contract } = require("../model");
 
+const sequelize = Job.sequelize;
 const Op = require("sequelize").Op;
 
 const getAllUnpaidJobs = async (profileId) => {
@@ -70,4 +73,34 @@ const pay = async (jobId) => {
   }
 };
 
-module.exports = { getAllUnpaidJobs, getJobById, pay };
+const getJobsByDate = async (startDate, endDate) => {
+  try {
+    const jobs = await sequelize.query(
+      `select p.profession, sum(j.price) as totalAmount 
+       from jobs j 
+      inner join contracts c on c.id = j.ContractId 
+      inner join profiles p on p.id = c.clientId
+      where paymentDate between :start_date and :end_date
+        and paymentDate is not null
+      group by p.profession 
+      order by totalAmount desc;`,
+      {
+        replacements: {
+          start_date: moment(startDate).utc().toDate(),
+          end_date: moment(endDate)
+            .add(1, "day")
+            .subtract(1, "millisecond")
+            .utc()
+            .toDate()
+        },
+        type: QueryTypes.SELECT
+      }
+    );
+
+    return jobs;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+module.exports = { getAllUnpaidJobs, getJobById, pay, getJobsByDate };

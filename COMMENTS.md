@@ -4,7 +4,8 @@
 
 1. I had to update SQLite3 version from 4.0.1 to 5.1.4, since I was facing errors when installing the dependencies. I could probably
    change my Node version but I think that, in general, having an up-to-date package is a good thing.
-2. I created simple repository and service layers to be able to reuse code, but if it was a bigger product I'd probably create a fanciest one, inclusind Interfaces, Dependency Injetcion, etc..
+2. I created simple repository and service layers to be able to reuse code, but if it was a bigger product I'd probably create a fanciest one, inclusind Controllers, Interfaces, Dependency Injetcion, etc..
+3. In the sixth requirement I was not sure if I should consider a job to be "Done" based on the "paymentDate" column or not. To be more accurate I'd prefer to add 2 new columns to Job table "start_date" and "end_date", to keep track of the period it took to be completed, and only then consider jobs within this interval to the sum of the amount. For simplicity, I will just use "paymentDate" on my solution.
 
 ## Tech Debts
 
