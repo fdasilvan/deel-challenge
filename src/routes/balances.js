@@ -18,7 +18,7 @@ router.post("/deposit/:userId", async (req, res) => {
     // Makes a deposit
     const updatedObject = await deposit(userId, depositAmount);
 
-    console.log("Deposit sucessful: " + JSON.stringify(updatedObject));
+    console.log("### DEPOSIT SUCCESSFUL: " + JSON.stringify(updatedObject));
 
     res
       .status(200)

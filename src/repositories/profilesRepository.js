@@ -1,5 +1,4 @@
 const { Profile } = require("../model");
-const { sequelize } = require("sequelize");
 
 const transferFunds = async (fromUserId, toUserId, amount) => {
   try {

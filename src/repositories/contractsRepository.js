@@ -2,9 +2,9 @@ const { Contract } = require("../model");
 
 const Op = require("sequelize").Op;
 
-const getContractById = async (id, profileId) => {
+const getContractById = async (contractId, profileId) => {
   return Contract.findOne({
-    where: { id, ContractorId: profileId }
+    where: { id: contractId, ContractorId: profileId }
   });
 };
 

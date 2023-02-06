@@ -1,10 +1,10 @@
 const { Job, Contract } = require("../model");
 
-const { transferFunds } = require("./profilesRepository");
-
 const Op = require("sequelize").Op;
 
 const getAllUnpaidJobs = async (profileId) => {
+  console.log(`### GETTING UNPAID JOBS FOR USER ${profileId}`);
+
   const unpaidJobs = await Job.findAll({
     include: [
       {
@@ -27,41 +27,36 @@ const getAllUnpaidJobs = async (profileId) => {
       }
     ]
   });
+
   return unpaidJobs;
 };
 
-const payJob = async (jobId) => {
+const getJobById = async (jobId) => {
+  try {
+    // Search for the job and make sure it exists
+    const job = await Job.findOne({
+      where: {
+        id: jobId
+      },
+      include: ["Contract"]
+    });
+
+    return job;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+const pay = async (jobId) => {
   console.log("### STARTED JOB PAYMENT: " + jobId);
 
   try {
     const paymentOccured = false;
 
-    // Search for the job and make sure it exists
-    const job = await Job.findOne({
-      where: {
-        id: jobId,
-        paid: {
-          [Op.eq]: null
-        }
-      },
-      include: ["Contract"]
-    });
-
-    if (!job) {
-      throw new Error("It was not possible to pay for the job!");
-    }
-
-    // Transfer the funds from client's to contractor's account
-    const transferOccurred = await transferFunds(
-      job.Contract.ClientId,
-      job.Contract.ContractorId,
-      job.price
-    );
+    const job = await getJobById(jobId);
 
     // If everything happened as expected, then update job after
-    if (transferOccurred) {
-      await job.update({ paid: 1, paymentDate: new Date() });
-    }
+    await job.update({ paid: 1, paymentDate: new Date() });
 
     // Return TRUE if the process was sucessful and FALSE if not
     return paymentOccured;
@@ -70,4 +65,4 @@ const payJob = async (jobId) => {
   }
 };
 
-module.exports = { getAllUnpaidJobs, payJob };
+module.exports = { getAllUnpaidJobs, getJobById, pay };
