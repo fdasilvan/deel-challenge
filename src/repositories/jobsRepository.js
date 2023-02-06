@@ -79,7 +79,7 @@ const getJobsByDate = async (startDate, endDate) => {
       `select p.profession, sum(j.price) as totalAmount 
        from jobs j 
       inner join contracts c on c.id = j.ContractId 
-      inner join profiles p on p.id = c.clientId
+      inner join profiles p on p.id = c.contractorId
       where paymentDate between :start_date and :end_date
         and paymentDate is not null
       group by p.profession 

@@ -1,4 +1,7 @@
 const { getJobsByDate } = require("../repositories/jobsRepository");
+const {
+  getClientsAmountByDate
+} = require("../repositories/profilesRepository");
 
 const getBestProfessions = async (startDate, endDate) => {
   try {
@@ -10,4 +13,18 @@ const getBestProfessions = async (startDate, endDate) => {
   }
 };
 
-module.exports = { getBestProfessions };
+const getBestClients = async (startDate, endDate, limit) => {
+  try {
+    if (!limit) {
+      limit = 2;
+    }
+
+    const result = await getClientsAmountByDate(startDate, endDate, limit);
+
+    return result;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+module.exports = { getBestProfessions, getBestClients };

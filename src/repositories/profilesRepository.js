@@ -1,4 +1,8 @@
+const moment = require("moment");
+const { QueryTypes } = require("sequelize");
 const { Profile } = require("../model");
+
+const sequelize = Profile.sequelize;
 
 const transferFunds = async (fromUserId, toUserId, amount) => {
   try {
@@ -57,4 +61,37 @@ const depositFunds = async (profileId, depositAmount) => {
   }
 };
 
-module.exports = { transferFunds, depositFunds };
+const getClientsAmountByDate = async (startDate, endDate, limit) => {
+  try {
+    const clients = await sequelize.query(
+      `select p.firstName || ' ' || p.lastName as fullName, 
+            sum(j.price) as totalAmount 
+       from jobs j 
+      inner join contracts c on c.id = j.ContractId 
+      inner join profiles p on p.id = c.clientId
+      where paymentDate between :start_date and :end_date
+        and paymentDate is not null
+      group by fullName
+      order by totalAmount desc
+      limit :limit;`,
+      {
+        replacements: {
+          start_date: moment(startDate).utc().toDate(),
+          end_date: moment(endDate)
+            .add(1, "day")
+            .subtract(1, "millisecond")
+            .utc()
+            .toDate(),
+          limit
+        },
+        type: QueryTypes.SELECT
+      }
+    );
+
+    return clients;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+module.exports = { transferFunds, depositFunds, getClientsAmountByDate };
