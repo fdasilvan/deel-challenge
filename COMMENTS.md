@@ -6,32 +6,34 @@
    change my Node version but I think that, in general, having an up-to-date package is a good thing.
 2. I created simple repository and service layers to be able to reuse code, but if it was a bigger product I'd probably create a fanciest one, inclusind Controllers, Interfaces, Dependency Injetcion, etc..
 3. In the sixth requirement I was not sure if I should consider a job to be "Done" based on the "paymentDate" column or not. To be more accurate I'd prefer to add 2 new columns to Job table "start_date" and "end_date", to keep track of the period it took to be completed, and only then consider jobs within this interval to the sum of the amount. For simplicity, I will just use "paymentDate" on my solution.
+4. For this test I implemented unit tests considering the seed database as a reference. In a production project I'd create all the
 
 ## Tech Debts
 
-[ ] Implement better error handling
-[ ] Implement better logging
-[ ] Implement Service Layer, where the business logic should be
+[x] Implement better error handling
+[x] Implement better logging
+[x] Implement Service Layer, where the business logic should be
 [ ] Implement transactions on transfer endpoint (I had some difficulties making it work in Sequelize/SQLite)
 
 ## Unit tests
 
 ### Authentication Middleware
 
-    [ ] An invalid profile should return 401 - Unauthorized
+    [x] Valid profile should return 200 - OK
+    [x] Non existent profile should return 401 - Unauthorized
+    [x] An invalid profile should return 401 - Unauthorized
 
 ### Contracts
 
-    [ ] Get contract by ID
-        [ ] Only owner can access his contracts
-        [ ] Contractor can't access contracts from other contractors
-        [ ] Not found contractors should return 404
-        [ ] Not found contracts should return 404
-    [ ] Get contracts
-        [ ] Only owner can access his contracts
-        [ ] Contractor can't access contracts from other contractors
-        [ ] No contracts should return 200 with an empty array
-        [ ] Found contracts couldn't be "terminated"
+    [x] Get contract by ID
+        [x] Only owner can access his contracts
+        [x] Contractor can't access contracts from other contractors
+        [x] Not found contractors/clients should return 404
+        [x] Not found contracts should return 404
+    [x] Get contracts
+        [x] Should only bring his own contracts (either as client or contractor)
+        [x] Contractor can't access contracts from other contractors
+        [x] Found contracts couldn't be "terminated"
 
 ### Jobs
 
