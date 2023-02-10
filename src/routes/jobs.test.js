@@ -50,11 +50,6 @@ describe("Jobs Router - getUnpaidJobs", () => {
   });
 });
 
-// [x] Can't pay for a job that is already paid
-// [x] Only the client can pay for a job
-// [x] Can't pay if the client is invalid
-// [x] Can't pay if the client doesn't have enough balance
-// [ ] If met all the conditions, the job should have paid = 1 and a paymentDate
 describe("Jobs Router - payJob", () => {
   it("Should not allow a paid job to be paid again.", async () => {
     // Job 6 is already paid, so it shouldn't allow it to be paid

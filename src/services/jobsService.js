@@ -32,7 +32,6 @@ const payJob = async (jobId, profileId) => {
       );
     }
 
-    console.log("TESTEEE: " + job.clientId + " - " + profileId);
     if (profileId && job.Contract.ClientId !== profileId) {
       throw new Error("This job is can only be paid by the client.");
     }

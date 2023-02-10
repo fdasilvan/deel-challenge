@@ -1,9 +1,16 @@
 const { getAllUnpaidJobs } = require("../repositories/jobsRepository");
 const { depositFunds } = require("../repositories/profilesRepository");
 
-const deposit = async (profileId, depositAmount) => {
+const deposit = async (profileId, loggedUserId, depositAmount) => {
   try {
-    console.log(`### STARTING DEPOSIT: ${depositAmount} to ${profileId}`);
+    console.log(`### STARTING DEPOSIT: $${depositAmount} to ${profileId}`);
+
+    if (profileId != loggedUserId) {
+      throw new Error(
+        "It's not possible to deposit money to a different account."
+      );
+    }
+
     const unpaidJobs = await getAllUnpaidJobs(profileId);
 
     let sumUnpaidJobs = 0;
@@ -17,8 +24,12 @@ const deposit = async (profileId, depositAmount) => {
 
     console.log(`### SUM OF ACTIVE JOBS AMOUNT: ${sumUnpaidJobs}`);
 
+    if (depositAmount <= 0) {
+      throw new Error("It's not possible to deposit a non-positive amount.");
+    }
+
     // Clients can only deposit 25% of the sum of all the active jobs amount, so we need to validate it. A deposit can't be ZERO either
-    if (depositAmount <= 0 || depositAmount > sumUnpaidJobs / 4) {
+    if (depositAmount > sumUnpaidJobs / 4) {
       throw new Error(
         "It was not possible to make a deposit. The amount exceeds the 25% limit over active jobs."
       );
