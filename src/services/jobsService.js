@@ -15,9 +15,11 @@ const getUnpaidJobs = async (profileId) => {
   }
 };
 
-const payJob = async (jobId) => {
+const payJob = async (jobId, profileId) => {
   try {
-    console.log(`### STARTING PAY JOB SERVICE (${jobId})`);
+    console.log(
+      `### STARTING PAY JOB SERVICE (${jobId}) - Client ${profileId}`
+    );
 
     const job = await getJobById(jobId);
 
@@ -28,6 +30,11 @@ const payJob = async (jobId) => {
       throw new Error(
         "This job is already paid. You can't pay for the same job again."
       );
+    }
+
+    console.log("TESTEEE: " + job.clientId + " - " + profileId);
+    if (profileId && job.Contract.ClientId !== profileId) {
+      throw new Error("This job is can only be paid by the client.");
     }
 
     // Make the transfer

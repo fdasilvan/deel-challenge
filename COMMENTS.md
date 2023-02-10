@@ -37,17 +37,16 @@
 
 ### Jobs
 
-    [ ] Get unpaid jobs for active contracts
-        [ ] Shouldn't bring paid jobs
-        [ ] Should only bring contracts in which the logged user is either a client or a contractor
-        [ ] Should only bring active contracts
-    [ ] Pay job
-        [ ] Can't pay for a job that is already paid
-        [ ] Only the client can pay for a job
-        [ ] Can't pay if the client is invalid
-        [ ] Can't pay if the contractor is invalid
-        [ ] Can't pay if the client doesn't have enough balance
-        [ ] If met all the conditions, the job should have paid = 1 and a paymentDate
+    [x] Get unpaid jobs for active contracts
+        [x] Shouldn't bring paid jobs
+        [x] Should only bring contracts in which the logged user is either a client or a contractor
+        [x] Should only bring active contracts
+    [x] Pay job
+        [x] Can't pay for a job that is already paid
+        [x] Only the client can pay for a job
+        [x] Can't pay if the client is invalid
+        [x] Can't pay if the client doesn't have enough balance
+        [x] If met all the conditions, the job should have paid = 1 and a paymentDate
 
 ### Profile
 

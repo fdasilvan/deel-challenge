@@ -20,7 +20,7 @@ router.get("/unpaid", async (req, res) => {
  */
 router.post("/:job_id/pay", async (req, res) => {
   try {
-    await payJob(req.params.job_id);
+    await payJob(req.params.job_id, req.profile.id);
     return res.status(200).json("Payment sucessful!");
   } catch (ex) {
     console.log(ex);

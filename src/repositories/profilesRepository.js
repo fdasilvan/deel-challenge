@@ -17,7 +17,7 @@ const transferFunds = async (fromUserId, toUserId, amount) => {
     // could try to figure out the balance from an user account by creating fake jobs and calling this endpoint out.
     if (!client || client.balance < amount) {
       console.log(`CLIENT'S BALANCE: ${client.balance} -> AMOUNT: ${amount}`);
-      throw new Error("It wasn't possible to make the transfer");
+      throw new Error("It wasn't possible to make the transfer.");
     }
 
     // First I'll remove the balance from client's account
